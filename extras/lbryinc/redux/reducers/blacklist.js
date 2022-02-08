@@ -19,7 +19,7 @@ export const blacklistReducer = handleActions(
         ...state,
         fetchingBlackListedOutpoints: false,
         fetchingBlackListedOutpointsSucceed: success,
-        blackListedOutpoints: outpoints,
+        blackListedOutpoints: [],
       };
     },
     [ACTIONS.FETCH_BLACK_LISTED_CONTENT_FAILED]: (state, action) => {
