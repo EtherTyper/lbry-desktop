@@ -17,7 +17,7 @@ export const filteredReducer = handleActions(
       return {
         ...state,
         loading: false,
-        filteredOutpoints: outpoints,
+        filteredOutpoints: [],
       };
     },
     [ACTIONS.FETCH_FILTERED_CONTENT_FAILED]: (state, action) => {
