@@ -1,24 +1,24 @@
 // @flow
-import * as React from 'react';
-import classnames from 'classnames';
-import remark from 'remark';
-import remarkAttr from 'remark-attr';
-import remarkStrip from 'strip-markdown';
-import remarkEmoji from 'remark-emoji';
-import remarkBreaks from 'remark-breaks';
-import remarkFrontMatter from 'remark-frontmatter';
-import reactRenderer from 'remark-react';
-import MarkdownLink from 'component/markdownLink';
-import defaultSchema from 'hast-util-sanitize/lib/github.json';
+import { CHANNEL_STAKED_LEVEL_VIDEO_COMMENTS } from 'config';
 import { formattedLinks, inlineLinks } from 'util/remark-lbry';
 import { formattedTimestamp, inlineTimestamp } from 'util/remark-timestamp';
 import { formattedEmote, inlineEmote } from 'util/remark-emote';
-import ZoomableImage from 'component/zoomableImage';
-import { CHANNEL_STAKED_LEVEL_VIDEO_COMMENTS } from 'config';
-import Button from 'component/button';
 import * as ICONS from 'constants/icons';
-import { parse } from 'node-html-parser';
+import * as React from 'react';
+import Button from 'component/button';
+import classnames from 'classnames';
+import defaultSchema from 'hast-util-sanitize/lib/github.json';
+import MarkdownLink from 'component/markdownLink';
 import OptimizedImage from 'component/optimizedImage';
+import reactRenderer from 'remark-react';
+import remark from 'remark';
+import remarkAttr from 'remark-attr';
+import remarkBreaks from 'remark-breaks';
+import remarkEmoji from 'remark-emoji';
+import remarkFrontMatter from 'remark-frontmatter';
+import remarkStrip from 'strip-markdown';
+import ZoomableImage from 'component/zoomableImage';
+import { parse } from 'node-html-parser';
 
 const RE_EMOTE = /:\+1:|:-1:|:[\w-]+:/;
 
@@ -146,7 +146,7 @@ function isStakeEnoughForPreview(stakedLevel) {
 // ****************************************************************************
 // ****************************************************************************
 
-const MarkdownPreview = (props: MarkdownProps) => {
+export default React.memo<MarkdownProps>(function MarkdownPreview(props: MarkdownProps) {
   const {
     content,
     strip,
@@ -173,14 +173,9 @@ const MarkdownPreview = (props: MarkdownProps) => {
         if (lbrySrc && lbrySrc.startsWith('lbry://')) {
           return lbrySrc;
         }
-
         return iframeHtml;
       })
     : '';
-
-  const initialQuote = strippedContent.split(' ').find((word) => word.length > 0 || word.charAt(0) === '>');
-  let stripQuote;
-  if (initialQuote && initialQuote.charAt(0) === '>') stripQuote = true;
 
   const remarkOptions: Object = {
     sanitize: schema,
@@ -216,22 +211,10 @@ const MarkdownPreview = (props: MarkdownProps) => {
   };
 
   // Strip all content and just render text
-  if (strip || stripQuote) {
+  if (strip) {
     // Remove new lines and extra space
     remarkOptions.remarkReactComponents.p = SimpleText;
-    return stripQuote ? (
-      <span dir="auto" className="markdown-preview">
-        <blockquote>
-          {
-            remark()
-              .use(remarkStrip)
-              .use(remarkFrontMatter, ['yaml'])
-              .use(reactRenderer, remarkOptions)
-              .processSync(content).contents
-          }
-        </blockquote>
-      </span>
-    ) : (
+    return (
       <span dir="auto" className="markdown-preview">
         {
           remark()
@@ -267,6 +250,4 @@ const MarkdownPreview = (props: MarkdownProps) => {
       }
     </div>
   );
-};
-
-export default MarkdownPreview;
+});
