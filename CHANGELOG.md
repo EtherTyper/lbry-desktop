@@ -5,6 +5,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased for Desktop]
 
+## [0.52.4] - [2022-02-15]
+
+### Fixed
+
+- Fixed active channel ([#7481](https://github.com/lbryio/lbry-desktop/pull/7481))
+- Remove extra search button in header ([#7482](https://github.com/lbryio/lbry-desktop/pull/7482))
+
+## [0.52.3] - [2022-02-15]
+
+### Fixed
+- Fixed comment editing and pinning ([#7476](https://github.com/lbryio/lbry-desktop/pull/7476))
+- Fixed mac header ([#7479](https://github.com/lbryio/lbry-desktop/pull/7479))
+- Fixed markdown display and lbry url embedding ([#7474](https://github.com/lbryio/lbry-desktop/pull/7474))
+
 ## [0.52.2] - [2022-02-11]
 
 ### Added
